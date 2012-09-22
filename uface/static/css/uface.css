@@ -7,3 +7,30 @@ body.login {
 #content h1 {
     background: #efefef;
 }
+
+#billboard {
+    border: 10px solid #999;
+    margin-left: auto;
+    margin-right: auto;
+    height: 200px;
+    width: 940px;
+    background: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0 10px 10px;
+}
+
+.billboard-pane{
+    float: left;
+    height: 140px;
+    padding: 0 10px 10px;
+    width: 290px;
+}
+#billboard-important,
+#billboard-personal {
+    border-right: 5px solid #ccc;
+}
+
+.billboard-clean {
+    clear: both;
+}
