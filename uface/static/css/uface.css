@@ -1,6 +1,8 @@
-body,
+body{
+    background:#fff url(../images/bg_003.jpg) no-repeat fixed;
+}
 body.login {
-    background: #fff url(../images/ufacebg.jpg) no-repeat top;
+    background:#eee url(../images/login_003.jpg) no-repeat fixed;
 }
 #content h1 {
     background: #efefef;
