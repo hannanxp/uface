@@ -12,7 +12,7 @@ def test(request):
     return HttpResponse(ret, 'application/javascript')
     
 # Initial ajax request
-def init(request):
+def load(request):
     
     user = user_from_session_key(request.session.session_key)
     data = {'id': user.id, 'username': user.username}
