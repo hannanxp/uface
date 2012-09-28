@@ -25,8 +25,11 @@ def load(request):
 # Change Box Position
 def chpos(request):
     user = user_from_session_key(request.session.session_key)
-    modname = request.POST['modname']
-    box = get_or_create_userbox(user, modname)
+    
+    box = get_or_create_userbox(user, request.POST['modname'])
+    box.posx = request.POST['posx']
+    box.posy = request.POST['posy']
+    box.save()
     data = {}
     ret = simplejson.dumps(data)
     
