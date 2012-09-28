@@ -6,7 +6,12 @@ jQuery(function($){
             x += 100;
             y += 30;
             $(this).dialog({
-                position: [x, y]
+                position: [x, y],
+                open: function(event, ui) { 
+                    //hide close button.
+                    $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
+                },
+
             });
         });
         
