@@ -11,14 +11,14 @@ jQuery(function($){
             x += 100;
             y += 30;
             h += $(this).height() + 110;
-            console.log(h);
+            
             $(this).dialog({
                 position: [x, y],
                 open: function(event, ui) { 
                     $(this).parent().children().children('.ui-dialog-titlebar-close').hide();
                 },
                 dragStop: function(event, ui) {
-                    _changePos($(this).attr('id'), ui.position);
+                    _chpos($(this).attr('id'), ui.position);
                 }
 
             });
@@ -40,8 +40,18 @@ jQuery(function($){
 
     }
     
-    function _changePos(id, pos) {
-        console.log(id, pos);
+    function _chpos(id, pos) {
+        //console.log(id, pos);
+        var bbtoken = $("#bb-token").html();
+        $.ajax({
+            url: "/bb/chpos/",
+            type: 'POST',
+            data: {modname:id, posx: pos.left, posy: pos.top, csrfmiddlewaretoken: bbtoken},
+            success: function(data) {
+                console.log(data);
+            },
+            dataType: "json"
+        });
     }
     
     _init();

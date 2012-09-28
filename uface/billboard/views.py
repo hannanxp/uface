@@ -20,6 +20,14 @@ def load(request):
     
     return HttpResponse(ret, 'application/javascript')
     
+# Change Box Position
+def chpos(request):
+    
+    data = {'modname': request.POST['modname']}
+    ret = simplejson.dumps(data)
+    
+    return HttpResponse(ret, 'application/javascript')
+    
 def user_from_session_key(session_key):
     from django.conf import settings
     from django.contrib.auth import SESSION_KEY, BACKEND_SESSION_KEY, load_backend
