@@ -2,6 +2,8 @@
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core import serializers
+from django.core.exceptions import ObjectDoesNotExist
+from billboard.models import BillboardUserModuleBox
 
 def index(request):
     return HttpResponse('Hello Kitty')
@@ -22,8 +24,10 @@ def load(request):
     
 # Change Box Position
 def chpos(request):
-    
-    data = {'modname': request.POST['modname']}
+    user = user_from_session_key(request.session.session_key)
+    modname = request.POST['modname']
+    box = get_or_create_userbox(user, modname)
+    data = {}
     ret = simplejson.dumps(data)
     
     return HttpResponse(ret, 'application/javascript')
@@ -44,3 +48,11 @@ def user_from_session_key(session_key):
         if user:
             return user
     return AnonymousUser()
+    
+def get_or_create_userbox(user, modname):
+    try:
+        box = BillboardUserModuleBox.objects.get(user=user, modname=modname)
+    except ObjectDoesNotExist:
+        box = BillboardUserModuleBox(user=user, modname=modname, posx=-1, posy=-1)
+        box.save()
+    return box

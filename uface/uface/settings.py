@@ -123,6 +123,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     #'polls',
     #'postman',
+    'billboard'
 )
 
 # A sample logging configuration. The only tangible logging
