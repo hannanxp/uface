@@ -44,7 +44,7 @@
     </div>
     <!-- END Header -->
     
-    {% block billboard %}{% endblock %}
+    
     
     {% block breadcrumbs %}
     <div class="breadcrumbs">
@@ -52,6 +52,7 @@
     {% if title %} &rsaquo; {{ title }}{% endif %}
     </div>
     {% endblock %}
+    
     {% endif %}
 
     {% block messages %}
@@ -66,6 +67,7 @@
     <div id="content" class="{% block coltype %}colM{% endblock %}">
         {% block pretitle %}{% endblock %}
         {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
+        {% block billboard %}{% endblock %}
         {% block content %}
         {% block object-tools %}{% endblock %}
         {{ content }}
