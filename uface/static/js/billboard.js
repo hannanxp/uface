@@ -1,8 +1,15 @@
 jQuery(function($){
     function _init() {
         _load();
-        //setTimeout(_init, 10000); // 10 sec.
-        $(".module").dialog();
+        var pos, x = 0, y = 300;
+        $(".module").each(function(){
+            x += 100;
+            y += 30;
+            $(this).dialog({
+                position: [x, y]
+            });
+        });
+        
     }
     
     function _load() {
