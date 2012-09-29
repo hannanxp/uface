@@ -18,7 +18,7 @@ def load(request):
     
     user = user_from_session_key(request.session.session_key)
     jsbox = []
-    boxes = BillboardUserModuleBox.objects.all()
+    boxes = BillboardUserModuleBox.objects.filter(user=user)
     for box in boxes:
         jsbox.append({'modname': box.modname, 'posx': box.posx, 'posy': box.posy})
 
