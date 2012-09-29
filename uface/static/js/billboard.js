@@ -1,15 +1,33 @@
 jQuery(function($){
+    var moduleBox = [];
+    
     function _init() {
         _load();
+        
+        
+    }
+    
+    function _renderDialog() {
+        //console.log(moduleBox);
         var pos,
             x = 0,
             y = 300,
-            seth = false;
+            seth = false,
+            box,
             h = y;
+            
         $(".module").each(function(){
             seth = true;
-            x += 100;
-            y += 30;
+            box = _getBoxData($(this).attr('id'));
+            
+            if (box) {
+                x = box.posx;
+                y = box.posy;
+            }
+            else {
+                x += 100;
+                y += 30;
+            }
             h += $(this).height() + 110;
             
             $(this).dialog({
@@ -26,15 +44,32 @@ jQuery(function($){
         if (seth) {
             $("body").height(h);
         }
-        
+    }
+    
+    function _getBoxData(id) {
+        var i;
+        for (i = 0; i < moduleBox.length; ++i) {
+            //console.log(jsbox[i].modname);
+            if (moduleBox[i].modname == id) {
+                return moduleBox[i];
+            }
+        }
+        return false
     }
     
     function _load() {
         $.ajax({
             url: "/bb/load/",
             success: function(data) {
-                console.log(data);
-                },
+                moduleBox = data.jsbox;
+                //console.log(data);
+                //var i, jsbox = data.jsbox;
+                
+                //for (i = 0; i < jsbox.length; ++i) {
+                    //console.log(jsbox[i].modname);   
+                //}
+                _renderDialog();
+            },
             dataType: "json"
         });
 

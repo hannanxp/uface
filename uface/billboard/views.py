@@ -17,7 +17,12 @@ def test(request):
 def load(request):
     
     user = user_from_session_key(request.session.session_key)
-    data = {'id': user.id, 'username': user.username}
+    jsbox = []
+    boxes = BillboardUserModuleBox.objects.all()
+    for box in boxes:
+        jsbox.append({'modname': box.modname, 'posx': box.posx, 'posy': box.posy})
+
+    data = {'jsbox': jsbox}
     ret = simplejson.dumps(data)
     
     return HttpResponse(ret, 'application/javascript')
