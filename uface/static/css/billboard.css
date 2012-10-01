@@ -34,3 +34,7 @@
 .billboard-clean {
     clear: both;
 }
+
+.module {
+    display: none;
+}
