@@ -4,7 +4,70 @@ body{
 body.login {
     background:#eee url(../images/login_003.jpg) no-repeat fixed;
 }
+.login #container {
+    background: none repeat scroll 0 0 white;
+    border: 15px solid #333;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 100px;
+    min-width: 300px;
+    width: 600px;
+}
 #content h1 {
     background: #efefef;
 }
-
+.login #content h1 {
+    background: none;
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+}
+.login #content p.loginmsg{
+    text-align: center;
+}
+.loginform-rows,
+.loginform-submit{
+    border: 0;
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    background: #666;
+}
+.login .form-row {
+    float: left;
+    padding: 6px 0;
+    width: 100%;
+}
+.loginform-rows .top-line{
+    border-top: 1px solid #999;
+}
+.loginform-rows .bottom-line{
+    border-bottom: 1px solid #333;
+}
+.login .form-row label {
+    color: #fff;
+    float: left;
+    font-size: 0.9em;
+    font-weight: normal;
+    line-height: 2em;
+    padding-left: 1em;
+    text-align: left;
+    width: 9em;
+}
+.login .form-row #id_username, .login .form-row #id_password {
+    width: 265px;
+    border-radius: 5px;
+}
+.login-clear{
+    clear: both;
+}
+.loginform-submit{
+    background: #fff;
+    text-align: right;
+}
+.login .submit-row {
+    clear: both;
+    padding: 0;
+    margin: 4px;
+}
