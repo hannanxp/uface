@@ -1,16 +1,23 @@
+#header {
+    background: #444;
+}
 .dashboard #content {
     width: 98%;
+    margin-top: 0;
+    padding-top: 0;
 }
 #billboard {
-    border: 10px solid #999;
+    border: 15px solid #444;
+    
+    border-top: 0;
     margin-left: auto;
     margin-right: auto;
     height: 200px;
     width: 940px;
     background: #fff;
-    margin-top: 10px;
+    margin-top: 0;
     margin-bottom: 10px;
-    padding: 0 10px 10px;
+    padding: 10px 10px 10px;
 }
 
 .billboard-pane{
