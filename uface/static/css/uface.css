@@ -71,7 +71,7 @@ body.login {
     padding: 0;
     margin: 4px;
 }
-input[type="submit"] {
+.login input[type="submit"] {
     -moz-border-bottom-colors: none;
     -moz-border-image: none;
     -moz-border-left-colors: none;
