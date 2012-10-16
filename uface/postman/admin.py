@@ -87,6 +87,7 @@ class MessageAdmin(admin.ModelAdmin):
             )}),
         (_('Message'), {'fields': (
             'subject',
+            'category',
             'body',
             ('parent', 'thread'),
             )}),
@@ -104,7 +105,7 @@ class MessageAdmin(admin.ModelAdmin):
         'parent', 'thread', # no reason to change, and anyway too many objects
         'moderation_date', 'moderation_by', # automatically set at status change
     )
-    radio_fields = {'moderation_status': admin.VERTICAL}
+    radio_fields = {'moderation_status': admin.VERTICAL, 'category': admin.VERTICAL,}
 
     def queryset(self, request):
         """

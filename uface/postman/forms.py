@@ -31,6 +31,7 @@ class BaseWriteForm(forms.ModelForm):
             # for better confort, ensure a 'cols' of at least
             # the 'width' of the body quote formatter.
             'body': forms.Textarea(attrs={'cols': WRAP_WIDTH, 'rows': 12}),
+            'category': forms.RadioSelect
         }
 
     error_css_class = 'error'
@@ -148,7 +149,7 @@ class WriteForm(BaseWriteForm):
     recipients = CommaSeparatedUserField(label=(_("Recipients"), _("Recipient")))
 
     class Meta(BaseWriteForm.Meta):
-        fields = ('recipients', 'subject', 'body')
+        fields = ('recipients', 'subject', 'category', 'body')
 
 class AnonymousWriteForm(BaseWriteForm):
     """The form for an anonymous user, to compose a message."""
