@@ -15,6 +15,16 @@ except ImportError:
 from postman.urls import OPTION_MESSAGES
 from postman.utils import email_visitor, notify_user
 
+# category constants
+CATEGORY_IMPORTANT = 'i'
+CATEGORY_PERSONAL = 'p'
+CATEGORY_USEFUL = 'u'
+CATEGORY_CHOICES = (
+    (CATEGORY_IMPORTANT, _('Important')),
+    (CATEGORY_PERSONAL, _('Personal')),
+    (CATEGORY_USEFUL, _('Useful')),
+)
+
 # moderation constants
 STATUS_PENDING = 'p'
 STATUS_ACCEPTED = 'a'
@@ -233,6 +243,8 @@ class Message(models.Model):
         null=True, blank=True, verbose_name=_("moderator"))
     moderation_date = models.DateTimeField(_("moderated at"), null=True, blank=True)
     moderation_reason = models.CharField(_("rejection reason"), max_length=120, blank=True)
+    # category fields
+    category = models.CharField(_("category"), max_length=1, choices=CATEGORY_CHOICES, default=CATEGORY_PERSONAL)
 
     objects = MessageManager()
 
