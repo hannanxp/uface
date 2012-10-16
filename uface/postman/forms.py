@@ -130,7 +130,7 @@ class BaseWriteForm(forms.ModelForm):
                 self.instance.email = r
             self.instance.pk = None # force_insert=True is not accessible from here
             self.instance.auto_moderate(auto_moderators)
-            self.instance.clean_moderation(initial_status)
+            self.instance.clean_moderation(initial_status, self.instance.sender)
             self.instance.clean_for_visitor()
             m = super(BaseWriteForm, self).save()
             if self.instance.is_rejected():
