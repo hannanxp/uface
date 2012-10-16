@@ -238,7 +238,7 @@ class Message(models.Model):
     sender_deleted_at = models.DateTimeField(_("deleted by sender at"), null=True, blank=True)
     recipient_deleted_at = models.DateTimeField(_("deleted by recipient at"), null=True, blank=True)
     # moderation fields
-    moderation_status = models.CharField(_("status"), max_length=1, choices=STATUS_CHOICES, default=STATUS_PENDING)
+    moderation_status = models.CharField(_("status"), max_length=1, choices=STATUS_CHOICES, default=STATUS_ACCEPTED)
     moderation_by = models.ForeignKey(User, related_name='moderated_messages',
         null=True, blank=True, verbose_name=_("moderator"))
     moderation_date = models.DateTimeField(_("moderated at"), null=True, blank=True)
@@ -365,7 +365,8 @@ class Message(models.Model):
 
     def clean_moderation(self, initial_status, user=None):
         """Adjust automatically some fields, according to status workflow."""
-        if self.moderation_status <> initial_status:
+        #if self.moderation_status <> initial_status:
+        if True:
             self.moderation_date = now()
             self.moderation_by = user
             if self.is_rejected():
