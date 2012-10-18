@@ -62,13 +62,8 @@ jQuery(function($){
             url: "/bb/load/",
             success: function(data) {
                 moduleBox = data.jsbox;
-                //console.log(data);
-                //var i, jsbox = data.jsbox;
-                
-                //for (i = 0; i < jsbox.length; ++i) {
-                    //console.log(jsbox[i].modname);   
-                //}
                 _renderDialog();
+                _renderBillboard(data.messages);
             },
             dataType: "json"
         });
@@ -83,10 +78,32 @@ jQuery(function($){
             type: 'POST',
             data: {modname:id, posx: pos.left, posy: pos.top, csrfmiddlewaretoken: bbtoken},
             success: function(data) {
-                console.log(data);
+                //console.log(data);
             },
             dataType: "json"
         });
+    }
+    
+    function _renderBillboard(messages) {
+        //console.log(messages);
+        var i, msg;
+        for (i = 0; i < messages.i.length; ++i) {
+            $("#billboard-important")
+                .find(".billboard-content")
+                .append("<div class='msg-item'>[&bull;] "+ messages.i[i].s +"</div>");
+        }
+        
+        for (i = 0; i < messages.p.length; ++i) {
+            $("#billboard-personal")
+                .find(".billboard-content")
+                .append("<div class='msg-item'>[&bull;] "+ messages.p[i].s +"</div>");
+        }
+        
+        for (i = 0; i < messages.u.length; ++i) {
+            $("#billboard-useful")
+                .find(".billboard-content")
+                .append("<div class='msg-item'>[&bull;] "+ messages.u[i].s +"</div>");
+        }
     }
     
     _init();

@@ -8,6 +8,13 @@
 </head>
 <body id="{% block body_id %}{% endblock %}">
   <div id="body">
+    {% block messages %}
+        {% if messages %}
+        <ul class="messagelist">{% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}</ul>
+        {% endif %}
+    {% endblock messages %}
     {% block body %}
       <div>
         {% block content_title %}{% endblock %}
