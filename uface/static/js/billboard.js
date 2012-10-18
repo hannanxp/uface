@@ -97,16 +97,32 @@ jQuery(function($){
                         .append("<div class='msg-item'>[&bull;] "
                                 + "<span class='msg-subject'>"+ msgs[i].s +"</span>"
                                 + "<span class='msg-body'>"+ msgs[i].b +"</span>"
+                                + "<span class='msg-id'>"+ msgs[i].id +"</span>"
                                 + "</div>");
                 }
             }
          }
         
         $(".billboard-content .msg-item").live("click", function(){
-            $("#billboard-message").html($(this).find(".msg-body").html());
+            var msg_body;
+            
+            msg_body = $(this).find(".msg-body").html() +
+                "<div class='msg-options'>[ <span class='msg-option accept' title='"
+                + $(this).find(".msg-id").html() + "'>"
+                + "OK, I understand</span> ]</div>";
+            $("#billboard-message").html(msg_body);
             $("#billboard-message").dialog();
             $("#billboard-message").dialog('option', 'title', $(this).find(".msg-subject").html());
-
+            
+           
+           
+        
+        });
+        
+        $(".msg-options .accept").live("click", function(){
+            var msg_id = $(this).attr('title');
+            //console.log(msg_id);
+            $("#billboard-message").dialog( "close" );
         });
         
     }

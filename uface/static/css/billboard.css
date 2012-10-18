@@ -42,7 +42,20 @@
     text-decoration: none;
     color: #00f;
 }
-.billboard-content .msg-body {display: none}
+#billboard-message .msg-options {
+    margin-top: 20px;
+}
+#billboard-message .msg-option {
+    color: #00f;
+    cursor: pointer
+}
+#billboard-message .msg-option:hover {
+    text-decoration: underline;
+}
+.billboard-content .msg-body,
+.billboard-content .msg-id{
+    display: none
+}
 #billboard-i,
 #billboard-p {
     border-right: 5px solid #ccc;
