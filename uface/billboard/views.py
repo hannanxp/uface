@@ -13,11 +13,11 @@ def _get_messages(user):
     messages = Message.objects.filter(recipient=user)
     for msg in messages:
         if msg.category == 'i':
-            msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body})
+            msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived})
         elif msg.category == 'p':
-            msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body})
+            msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived})
         elif msg.category == 'u':
-            msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body})
+            msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived})
 
     data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
     return data
@@ -33,7 +33,7 @@ def _archive_msg(user, msg_id):
         status = False
         message = 'User is not the message recipien'
     
-    res = {'status': status, 'message': message}
+    res = {'status': status, 'message': message, 'msg_id': msg_id}
     return res
 
 def index(request):

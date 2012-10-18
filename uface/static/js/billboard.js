@@ -86,15 +86,21 @@ jQuery(function($){
     
     function _renderBillboard(messages) {
         //console.log(messages);
-        var i, msgs, msg_subject, msg_body;
+        var i, msgs, msg_subject, msg_body, archived ;
         
         for (var cat in messages) {
             if (messages.hasOwnProperty(cat)) {
                 //console.log(cat, messages[cat]);
                 msgs = messages[cat];
                 for (i = 0; i < msgs.length; ++i) {
+                    if (msgs[i].a == 1) {
+                        archived = "archived";
+                    }
+                    else {
+                        archived = "";
+                    }
                     $("#billboard-" + cat).find(".billboard-content")
-                        .append("<div class='msg-item'>[&bull;] "
+                        .append("<div class='msg-item "+ archived +"'>[&bull;] "
                                 + "<span class='msg-subject'>"+ msgs[i].s +"</span>"
                                 + "<span class='msg-body'>"+ msgs[i].b +"</span>"
                                 + "<span class='msg-id'>"+ msgs[i].id +"</span>"
@@ -128,7 +134,9 @@ jQuery(function($){
                 type: 'POST',
                 data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);
+                    //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
+                    $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
                     $("#billboard-message").dialog( "close" );
                 },
                 dataType: "json"
