@@ -24,19 +24,7 @@ def _get_messages(user):
 
 def index(request):
     user = user_from_session_key(request.session.session_key)
-    msgs_i = []
-    msgs_p = []
-    msgs_u = []
-    messages = Message.objects.filter(recipient=user)
-    for msg in messages:
-        if msg.category == 'i':
-            msgs_i.append({'id': msg.id,'s': msg.subject})
-        elif msg.category == 'p':
-            msgs_p.append({'id': msg.id,'s': msg.subject})
-        elif msg.category == 'u':
-            msgs_u.append({'id': msg.id,'s': msg.subject})
-
-    data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
+    data = _get_messages(user)
     ret = simplejson.dumps(data)
     return HttpResponse(ret, 'application/javascript')
     
