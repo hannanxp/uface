@@ -120,9 +120,20 @@ jQuery(function($){
         });
         
         $(".msg-options .accept").live("click", function(){
-            var msg_id = $(this).attr('title');
-            //console.log(msg_id);
-            $("#billboard-message").dialog( "close" );
+            var msg_id = $(this).attr('title'),
+                bbtoken = $("#bb-token").html();
+                
+            $.ajax({
+                url: "/bb/acceptmsg/",
+                type: 'POST',
+                data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
+                success: function(data) {
+                    console.log(data);
+                    $("#billboard-message").dialog( "close" );
+                },
+                dataType: "json"
+            });
+            
         });
         
     }

@@ -22,6 +22,20 @@ def _get_messages(user):
     data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
     return data
 
+def _archive_msg(user, msg_id):
+    msg = Message.objects.get(pk=msg_id)
+    message = ''
+    if msg.recipient == user:
+        msg.recipient_archived = 1
+        msg.save()
+        status = True
+    else:
+        status = False
+        message = 'User is not the message recipien'
+    
+    res = {'status': status, 'message': message}
+    return res
+
 def index(request):
     user = user_from_session_key(request.session.session_key)
     data = _get_messages(user)
@@ -59,6 +73,16 @@ def chpos(request):
     data = {}
     ret = simplejson.dumps(data)
     
+    return HttpResponse(ret, 'application/javascript')
+    
+# Mark message to archived by reader
+def acceptmsg(request):
+    user = user_from_session_key(request.session.session_key)
+    
+    result = _archive_msg(user, request.POST['msg_id'])
+    
+    data = result
+    ret = simplejson.dumps(data)
     return HttpResponse(ret, 'application/javascript')
     
 def user_from_session_key(session_key):

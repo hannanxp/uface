@@ -5,7 +5,5 @@ urlpatterns = patterns('billboard.views',
     url(r'^test/$', 'test'),
     url(r'^load/$', 'load'),
     url(r'^chpos/$', 'chpos'),
-    #url(r'^(?P<poll_id>\d+)/$', 'detail'),
-    #url(r'^(?P<poll_id>\d+)/results/$', 'results'),
-    #url(r'^(?P<poll_id>\d+)/vote/$', 'vote'),
+    url(r'^acceptmsg/$', 'acceptmsg'),
 )
