@@ -86,31 +86,29 @@ jQuery(function($){
     
     function _renderBillboard(messages) {
         //console.log(messages);
-        var i, msg_title, msg_body;
-        for (i = 0; i < messages.i.length; ++i) {
-            $("#billboard-important")
-                .find(".billboard-content")
-                .append("<div class='msg-item'>[&bull;] "+ messages.i[i].s +"</div>");
-        }
+        var i, msgs, msg_subject, msg_body;
         
-        for (i = 0; i < messages.p.length; ++i) {
-            $("#billboard-personal")
-                .find(".billboard-content")
-                .append("<div class='msg-item'>[&bull;] "+ messages.p[i].s +"</div>");
-        }
-        
-        for (i = 0; i < messages.u.length; ++i) {
-            $("#billboard-useful")
-                .find(".billboard-content")
-                .append("<div class='msg-item'>[&bull;] "+ messages.u[i].s +"</div>");
-        }
+        for (var cat in messages) {
+            if (messages.hasOwnProperty(cat)) {
+                //console.log(cat, messages[cat]);
+                msgs = messages[cat];
+                for (i = 0; i < msgs.length; ++i) {
+                    $("#billboard-" + cat).find(".billboard-content")
+                        .append("<div class='msg-item'>[&bull;] "
+                                + "<span class='msg-subject'>"+ msgs[i].s +"</span>"
+                                + "<span class='msg-body'>"+ msgs[i].b +"</span>"
+                                + "</div>");
+                }
+            }
+         }
         
         $(".billboard-content .msg-item").live("click", function(){
-            $("#billboard-message").html($(this).html());
+            $("#billboard-message").html($(this).find(".msg-body").html());
             $("#billboard-message").dialog();
-            $("#billboard-message").dialog('option', 'title', $(this).html());
+            $("#billboard-message").dialog('option', 'title', $(this).find(".msg-subject").html());
 
         });
+        
     }
     
     

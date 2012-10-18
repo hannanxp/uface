@@ -42,8 +42,9 @@
     text-decoration: none;
     color: #00f;
 }
-#billboard-important,
-#billboard-personal {
+.billboard-content .msg-body {display: none}
+#billboard-i,
+#billboard-p {
     border-right: 5px solid #ccc;
 }
 

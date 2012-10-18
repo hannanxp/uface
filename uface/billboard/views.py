@@ -13,11 +13,11 @@ def _get_messages(user):
     messages = Message.objects.filter(recipient=user)
     for msg in messages:
         if msg.category == 'i':
-            msgs_i.append({'id': msg.id,'s': msg.subject})
+            msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body})
         elif msg.category == 'p':
-            msgs_p.append({'id': msg.id,'s': msg.subject})
+            msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body})
         elif msg.category == 'u':
-            msgs_u.append({'id': msg.id,'s': msg.subject})
+            msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body})
 
     data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
     return data
