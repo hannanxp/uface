@@ -19,6 +19,9 @@
     margin-bottom: 10px;
     padding: 10px 10px 10px;
 }
+#billboard-message{
+    display: none;
+}
 
 .billboard-pane{
     float: left;
@@ -33,6 +36,11 @@
 .billboard-content .msg-item {
     margin-bottom: 10px;
     margin-left: 5px;
+    cursor: pointer;
+}
+.billboard-content .msg-item:hover {
+    text-decoration: none;
+    color: #00f;
 }
 #billboard-important,
 #billboard-personal {

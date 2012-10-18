@@ -86,7 +86,7 @@ jQuery(function($){
     
     function _renderBillboard(messages) {
         //console.log(messages);
-        var i, msg;
+        var i, msg_title, msg_body;
         for (i = 0; i < messages.i.length; ++i) {
             $("#billboard-important")
                 .find(".billboard-content")
@@ -104,7 +104,16 @@ jQuery(function($){
                 .find(".billboard-content")
                 .append("<div class='msg-item'>[&bull;] "+ messages.u[i].s +"</div>");
         }
+        
+        $(".billboard-content .msg-item").live("click", function(){
+            $("#billboard-message").html($(this).html());
+            $("#billboard-message").dialog();
+            $("#billboard-message").dialog('option', 'title', $(this).html());
+
+        });
     }
+    
+    
     
     _init();
 });
