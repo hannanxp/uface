@@ -17,9 +17,10 @@ register = template.Library()
 class BillboarAppNode(template.Node):
     def __init__(self, target, var_name, var_name1, var_name2):
         self.target = target
-        self.var_name = var_name
-        self.var_name1 = var_name1
-        self.var_name2 = var_name2
+        self.varnames = [var_name, var_name1, var_name2]
+        #self.var_name = var_name
+        #self.var_name1 = var_name1
+        #self.var_name2 = var_name2
 
     def render(self, context):
         obj_list = self.target.resolve(context, True)
@@ -28,7 +29,7 @@ class BillboarAppNode(template.Node):
             context[self.var_name] = []
             return ''
         
-        new_obj_list = []
+        
         # do reorder obj_list here...
         # Todo: cari current user
         user = User.objects.get(pk=1)
@@ -46,56 +47,21 @@ class BillboarAppNode(template.Node):
             
         # here, all app list is saved into database
         
-        
-            
-        # sort app list 0
-        bbapps = BbApps.objects.filter(user=user, modcol=0).order_by('modweight')
-        for bbapp in bbapps:
-            
-            # populate obj_list
-            for app in obj_list:
-                if app['name'] == bbapp.modname: # obj exist
-                    new_app = app
-                    new_app['modcol'] = bbapp.modcol
-                    new_app['modweight'] = bbapp.modweight
-                    
-                    new_obj_list.append(new_app)
-            
-        context[self.var_name] = new_obj_list
-        
-        # sort app list 1
-        bbapps = BbApps.objects.filter(user=user, modcol=1).order_by('modweight')
-        for bbapp in bbapps:
-            
-            # populate obj_list
-            for app in obj_list:
-                if app['name'] == bbapp.modname: # obj exist
-                    new_app = app
-                    new_app['modcol'] = bbapp.modcol
-                    new_app['modweight'] = bbapp.modweight
-                    
-                    new_obj_list.append(new_app)
-            
-        context[self.var_name1] = new_obj_list
-        
-        # sort app list 2
-        bbapps = BbApps.objects.filter(user=user, modcol=2).order_by('modweight')
-        for bbapp in bbapps:
-            
-            # populate obj_list
-            for app in obj_list:
-                if app['name'] == bbapp.modname: # obj exist
-                    new_app = app
-                    new_app['modcol'] = bbapp.modcol
-                    new_app['modweight'] = bbapp.modweight
-                    
-                    new_obj_list.append(new_app)
-            
-        context[self.var_name2] = new_obj_list
-        
-        
-        
-        
+        for col, varname in enumerate(self.varnames):
+            new_obj_list = []
+            bbapps = BbApps.objects.filter(user=user, modcol=col).order_by('modweight')
+            for bbapp in bbapps:
+                
+                # populate obj_list
+                for app in obj_list:
+                    if app['name'] == bbapp.modname: # obj exist
+                        new_app = app
+                        new_app['modcol'] = bbapp.modcol
+                        new_app['modweight'] = bbapp.modweight
+                        
+                        new_obj_list.append(new_app)
+                
+            context[varname] = new_obj_list
         
         return ''
 
