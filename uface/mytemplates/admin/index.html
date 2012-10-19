@@ -13,14 +13,14 @@
 {% block content %}
 <div id="content-main">
     
-{% billboard_apps app_list as new_app_list %}
+{% billboard_apps app_list as new_app_list_0 new_app_list_1 new_app_list_2 %}
 
 <div style="background: #fff">
-{{ new_app_list }}
+{{ new_app_list_0 }}
 </div>
 
-{% if new_app_list %}
-    {% for app in new_app_list %}
+{% if new_app_list_0 %}
+    {% for app in new_app_list_0 %}
         <div class="module">
         <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>

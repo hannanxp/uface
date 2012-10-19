@@ -59,9 +59,9 @@ class BillboarAppNode(template.Node):
 def billboard_apps(parser, token):
     """Converts app_list into custom order list"""
     try:
-        tag_name, target_name, the_as, var_name = token.split_contents()
+        tag_name, target_name, the_as, var_name, var_name1, var_name2 = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires exactly three arguments" % token.contents.split()[0])
+        raise template.TemplateSyntaxError("%r tag requires exactly five arguments" % token.contents.split()[0])
         
     if the_as != 'as':
         raise template.TemplateSyntaxError("second argument to 'billboard_apps' tag must be 'as'")
