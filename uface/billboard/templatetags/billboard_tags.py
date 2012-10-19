@@ -46,6 +46,8 @@ class BillboarAppNode(template.Node):
             
         # here, all app list is saved into database
         
+        
+            
         # sort app list 0
         bbapps = BbApps.objects.filter(user=user, modcol=0).order_by('modweight')
         for bbapp in bbapps:
@@ -60,6 +62,41 @@ class BillboarAppNode(template.Node):
                     new_obj_list.append(new_app)
             
         context[self.var_name] = new_obj_list
+        
+        # sort app list 1
+        bbapps = BbApps.objects.filter(user=user, modcol=1).order_by('modweight')
+        for bbapp in bbapps:
+            
+            # populate obj_list
+            for app in obj_list:
+                if app['name'] == bbapp.modname: # obj exist
+                    new_app = app
+                    new_app['modcol'] = bbapp.modcol
+                    new_app['modweight'] = bbapp.modweight
+                    
+                    new_obj_list.append(new_app)
+            
+        context[self.var_name1] = new_obj_list
+        
+        # sort app list 2
+        bbapps = BbApps.objects.filter(user=user, modcol=2).order_by('modweight')
+        for bbapp in bbapps:
+            
+            # populate obj_list
+            for app in obj_list:
+                if app['name'] == bbapp.modname: # obj exist
+                    new_app = app
+                    new_app['modcol'] = bbapp.modcol
+                    new_app['modweight'] = bbapp.modweight
+                    
+                    new_obj_list.append(new_app)
+            
+        context[self.var_name2] = new_obj_list
+        
+        
+        
+        
+        
         return ''
 
 @register.tag
