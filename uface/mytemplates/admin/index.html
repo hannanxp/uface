@@ -1,63 +1,20 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 
-{% block extrahead %}
-<link rel="stylesheet" type="text/css" href="/static/js/jquery_ui/themes/redmond/jquery.ui.all.css">
-<link rel="stylesheet" type="text/css" href="/static/css/billboard.css" />
-<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/external/jquery.bgiframe-2.1.2.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.core.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.widget.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.mouse.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.draggable.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.position.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.resizable.js"></script>
-<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.dialog.js"></script>
-
-<script type="text/javascript" src="/static/js/billboard.js"></script>    
-{% endblock %}
-
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
 {% block bodyclass %}dashboard{% endblock %}
 
-{% block branding %}<h1 id="site-name">&nbsp</h1>{% endblock %}
-
-{% block content_title %}{% endblock %}
-
 {% block breadcrumbs %}{% endblock %}
-
-{% block billboard %}
-    <div id="billboard">
-        <h2>BILLBOARD/LATEST ANNOUNCEMENTS</h2>
-        <div class="billboard-panels">
-            <div id="billboard-i" class="billboard-pane">
-                <h3>IMPORTANT</h3>
-                <div class="billboard-content"></div>
-            </div>
-            <div id="billboard-p" class="billboard-pane">
-                <h3>PERSONAL</h3>
-                <div class="billboard-content"></div>
-            </div>
-            <div id="billboard-u" class="billboard-pane">
-                <h3>USEFUL</h3>
-                <div class="billboard-content"></div>
-            </div>
-        </div>
-        <div class="billboard-clean"></div>
-        <div id="billboard-message"></div>
-        <div id="bb-token" style="display:none">{{ csrf_token }}</div>
-    </div>
-{% endblock %}
 
 {% block content %}
 <div id="content-main">
 
 {% if app_list %}
     {% for app in app_list %}
-        <div class="module" id="Module{{ app.name }}">
+        <div class="module">
         <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
         {% for model in app.models %}
