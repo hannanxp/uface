@@ -8,6 +8,9 @@ Usage:
 """
 
 from django import template
+from billboard.models import BbApps
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 
 register = template.Library()
 
@@ -23,9 +26,33 @@ class BillboarAppNode(template.Node):
             context[self.var_name] = []
             return ''
         
+        new_obj_list = []
         # do reorder obj_list here...
+        # Todo: cari current user
+        user = User.objects.get(pk=1)
         
-        context[self.var_name] = obj_list
+        # initial data population
+        for app in obj_list:
+            modname = app['name']
+            
+            try:
+                bbapp = BbApps.objects.get(user=user, modname=modname)
+                
+            except ObjectDoesNotExist:
+                bbapp = BbApps(user=user, modname=modname, modcol=0, modweight=0)
+                bbapp.save()
+            
+            new_app = app
+            new_app['modcol'] = bbapp.modcol
+            new_app['modweight'] = bbapp.modweight
+                
+            new_obj_list.append(new_app)
+            
+        # sort app list
+        
+    
+            
+        context[self.var_name] = new_obj_list
         return ''
 
 @register.tag

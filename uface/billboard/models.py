@@ -8,3 +8,11 @@ class BillboardUserModuleBox(models.Model):
     posy = models.FloatField()
     def __unicode__(self):
         return self.user.username + "-" + self.modname
+    
+class BbApps(models.Model):
+    user = models.ForeignKey(User, unique=False)
+    modname = models.CharField(max_length=200)
+    modcol = models.IntegerField()
+    modweight = models.IntegerField()
+    def __unicode__(self):
+        return self.user.username + "-" + self.modname

@@ -15,6 +15,10 @@
     
 {% billboard_apps app_list as new_app_list %}
 
+<div style="background: #fff">
+{{ new_app_list }}
+</div>
+
 {% if new_app_list %}
     {% for app in new_app_list %}
         <div class="module">
