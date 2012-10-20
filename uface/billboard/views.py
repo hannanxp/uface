@@ -75,6 +75,19 @@ def chpos(request):
     
     return HttpResponse(ret, 'application/javascript')
     
+# Change Box Position
+def saveapps(request):
+    user = user_from_session_key(request.session.session_key)
+    apps = request.POST['apps']
+    
+    
+    data = {}
+    ret = simplejson.dumps(data)
+    
+    return HttpResponse(ret, 'application/javascript')
+    
+
+    
 # Mark message to archived by reader
 def acceptmsg(request):
     user = user_from_session_key(request.session.session_key)

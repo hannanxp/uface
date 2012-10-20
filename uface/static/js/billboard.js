@@ -14,7 +14,7 @@ jQuery(function($){
     }
     
     function _saveOrder() {
-        var data = [];
+        var data = "";
         $(".bbapp-region").each(function(index, value){
             var colid = value.id,
                 order = $('#' + colid).sortable("toArray"),
@@ -22,10 +22,24 @@ jQuery(function($){
                 
             for (i = 0; i < order.length; ++i) {
                 //console.log(index, i, order[i]);
-                data.push({'modcol': index, 'modweight': i, 'modname': order[i]})
+                data = data + ",[" + index + "," + i + "," + order[i] + "]";
             }
+            
         });
-        //console.log(data);
+        data = data.substring(1);
+        
+        // save to the server
+        var bbtoken = $("#bb-token").html();
+        $.ajax({
+            url: "/bb/saveapps/",
+            type: 'POST',
+            data: {apps: data, csrfmiddlewaretoken: bbtoken},
+            success: function(data) {
+                //console.log(data);
+            },
+            dataType: "json"
+        });
+        
     }
     
     
