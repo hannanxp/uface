@@ -15,12 +15,12 @@ from django.contrib.auth.models import User
 register = template.Library()
 
 class BillboarAppNode(template.Node):
-    def __init__(self, target, var_name, var_name1, var_name2):
+    def __init__(self, target, var_name):
         self.target = target
-        self.varnames = [var_name, var_name1, var_name2]
-        #self.var_name = var_name
+        self.var_name = var_name
         #self.var_name1 = var_name1
         #self.var_name2 = var_name2
+        
 
     def render(self, context):
         obj_list = self.target.resolve(context, True)
@@ -46,8 +46,8 @@ class BillboarAppNode(template.Node):
                 bbapp.save()
             
         # here, all app list is saved into database
-        
-        for col, varname in enumerate(self.varnames):
+        items = []
+        for col in [0,1,2]:
             new_obj_list = []
             bbapps = BbApps.objects.filter(user=user, modcol=col).order_by('modweight')
             for bbapp in bbapps:
@@ -60,8 +60,10 @@ class BillboarAppNode(template.Node):
                         new_app['modweight'] = bbapp.modweight
                         
                         new_obj_list.append(new_app)
-                
-            context[varname] = new_obj_list
+                        
+            items.append(new_obj_list)     
+        
+        context[self.var_name] = items
         
         return ''
 
@@ -69,13 +71,13 @@ class BillboarAppNode(template.Node):
 def billboard_apps(parser, token):
     """Converts app_list into custom order list"""
     try:
-        tag_name, target_name, the_as, var_name, var_name1, var_name2 = token.split_contents()
+        tag_name, target_name, the_as, var_name = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires exactly five arguments" % token.contents.split()[0])
+        raise template.TemplateSyntaxError("%r tag requires exactly three arguments" % token.contents.split()[0])
         
     if the_as != 'as':
         raise template.TemplateSyntaxError("second argument to 'billboard_apps' tag must be 'as'")
 
     target = parser.compile_filter(target_name)
     
-    return BillboarAppNode(target, var_name, var_name1, var_name2)
+    return BillboarAppNode(target, var_name)

@@ -13,16 +13,12 @@
 {% block content %}
 <div id="content-main">
     
-{% billboard_apps app_list as new_app_list_0 new_app_list_1 new_app_list_2 %}
+{% billboard_apps app_list as bb_items %}
 
-<div style="background: #fff">
-0 ---- {{ new_app_list_0 }}
-<br>
-1 ---- {{ new_app_list_1 }}    
-</div>
-
-{% if new_app_list_0 %}
-    {% for app in new_app_list_0 %}
+{% for new_app_list in bb_items %}
+<div id="bbapp-column-{{forloop.counter0}}">
+{% if new_app_list %}
+    {% for app in new_app_list %}
         <div class="module">
         <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
         <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
@@ -53,6 +49,8 @@
 {% else %}
     <p>{% trans "You don't have permission to edit anything." %}</p>
 {% endif %}
+</div>
+{% endfor %}
 </div>
 {% endblock %}
 
