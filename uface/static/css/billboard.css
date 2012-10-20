@@ -12,7 +12,9 @@
     float: none;
 }
 #content-related {
+    clear: both;
     float: none;
+    margin-top: 10px;
 }
 .colMS {
     margin-left: auto !important;
@@ -84,4 +86,13 @@
 
 .billboard-clean {
     clear: both;
+}
+
+
+.bbapp-region {
+    background: #fff;
+    float: left;
+    margin-right: 5px;
+    padding: 10px;
+    width: 295px;
 }

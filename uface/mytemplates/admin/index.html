@@ -60,7 +60,7 @@
     
     {% for new_app_list in bb_items %}
 
-
+        <div id="bbapp-region-{{forloop.counter0}}" class="bbapp-region">
         {% if new_app_list %}
             {% for app in new_app_list %}
                 <div class="module" id="Module{{ app.name }}">
@@ -91,8 +91,9 @@
                 </div>
             {% endfor %}
         {% else %}
-            <p>{% trans "You don't have permission to edit anything." %}</p>
+            <p>&nbsp;</p>
         {% endif %}
+        </div>
     {% endfor %}
     
 </div>
