@@ -15,12 +15,10 @@ from django.contrib.auth.models import User
 register = template.Library()
 
 class BillboarAppNode(template.Node):
-    def __init__(self, target, var_name):
+    def __init__(self, target, var_name, user_id):
         self.target = target
         self.var_name = var_name
-        #self.var_name1 = var_name1
-        #self.var_name2 = var_name2
-        
+        self.user_id = user_id
 
     def render(self, context):
         obj_list = self.target.resolve(context, True)
@@ -29,10 +27,8 @@ class BillboarAppNode(template.Node):
             context[self.var_name] = []
             return ''
         
-        
-        # do reorder obj_list here...
-        # Todo: cari current user
-        user = User.objects.get(pk=1)
+        obj_user_id = self.user_id.resolve(context, True)
+        user = User.objects.get(pk=obj_user_id)
         
         # initial saving
         for app in obj_list:
@@ -71,13 +67,14 @@ class BillboarAppNode(template.Node):
 def billboard_apps(parser, token):
     """Converts app_list into custom order list"""
     try:
-        tag_name, target_name, the_as, var_name = token.split_contents()
+        tag_name, target_name, the_as, var_name, user_id_name = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError("%r tag requires exactly three arguments" % token.contents.split()[0])
+        raise template.TemplateSyntaxError("%r tag requires exactly four arguments" % token.contents.split()[0])
         
     if the_as != 'as':
         raise template.TemplateSyntaxError("second argument to 'billboard_apps' tag must be 'as'")
 
     target = parser.compile_filter(target_name)
+    user_id = parser.compile_filter(user_id_name)
     
-    return BillboarAppNode(target, var_name)
+    return BillboarAppNode(target, var_name, user_id)
