@@ -2,56 +2,101 @@
 {% load i18n admin_static %}
 {% load billboard_tags %}
 
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="/static/js/jquery_ui/themes/redmond/jquery.ui.all.css">
+<link rel="stylesheet" type="text/css" href="/static/css/billboard.css" />
+<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/external/jquery.bgiframe-2.1.2.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.core.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.draggable.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.position.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.resizable.js"></script>
+<script type="text/javascript" src="/static/js/jquery_ui/ui/jquery.ui.dialog.js"></script>
+
+<!-- <script type="text/javascript" src="/static/js/billboard.js"></script> -->
+{% endblock %}
+
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}" />{% endblock %}
 
 {% block coltype %}colMS{% endblock %}
 
 {% block bodyclass %}dashboard{% endblock %}
 
+{% block branding %}<h1 id="site-name">&nbsp</h1>{% endblock %}
+
+{% block content_title %}{% endblock %}
+
 {% block breadcrumbs %}{% endblock %}
+
+{% block billboard %}
+    <div id="billboard">
+        <h2>BILLBOARD/LATEST ANNOUNCEMENTS</h2>
+        <div class="billboard-panels">
+            <div id="billboard-i" class="billboard-pane">
+                <h3>IMPORTANT</h3>
+                <div class="billboard-content"></div>
+            </div>
+            <div id="billboard-p" class="billboard-pane">
+                <h3>PERSONAL</h3>
+                <div class="billboard-content"></div>
+            </div>
+            <div id="billboard-u" class="billboard-pane">
+                <h3>USEFUL</h3>
+                <div class="billboard-content"></div>
+            </div>
+        </div>
+        <div class="billboard-clean"></div>
+        <div id="billboard-message"></div>
+        <div id="bb-token" style="display:none">{{ csrf_token }}</div>
+    </div>
+{% endblock %}
 
 {% block content %}
 <div id="content-main">
     
-{% billboard_apps app_list as bb_items %}
+    {% billboard_apps app_list as bb_items %}
+    
+    {% for new_app_list in bb_items %}
 
-{% for new_app_list in bb_items %}
-<div id="bbapp-column-{{forloop.counter0}}">
-{% if new_app_list %}
-    {% for app in new_app_list %}
-        <div class="module">
-        <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
-        <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
-        {% for model in app.models %}
-            <tr>
-            {% if model.admin_url %}
-                <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
-            {% else %}
-                <th scope="row">{{ model.name }}</th>
-            {% endif %}
 
-            {% if model.add_url %}
-                <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
-            {% else %}
-                <td>&nbsp;</td>
-            {% endif %}
-
-            {% if model.admin_url %}
-                <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
-            {% else %}
-                <td>&nbsp;</td>
-            {% endif %}
-            </tr>
-        {% endfor %}
-        </table>
-        </div>
+        {% if new_app_list %}
+            {% for app in new_app_list %}
+                <div class="module" id="Module{{ app.name }}">
+                <table summary="{% blocktrans with name=app.name %}Models available in the {{ name }} application.{% endblocktrans %}">
+                <caption><a href="{{ app.app_url }}" class="section">{% blocktrans with name=app.name %}{{ name }}{% endblocktrans %}</a></caption>
+                {% for model in app.models %}
+                    <tr>
+                    {% if model.admin_url %}
+                        <th scope="row"><a href="{{ model.admin_url }}">{{ model.name }}</a></th>
+                    {% else %}
+                        <th scope="row">{{ model.name }}</th>
+                    {% endif %}
+        
+                    {% if model.add_url %}
+                        <td><a href="{{ model.add_url }}" class="addlink">{% trans 'Add' %}</a></td>
+                    {% else %}
+                        <td>&nbsp;</td>
+                    {% endif %}
+        
+                    {% if model.admin_url %}
+                        <td><a href="{{ model.admin_url }}" class="changelink">{% trans 'Change' %}</a></td>
+                    {% else %}
+                        <td>&nbsp;</td>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+                </table>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>{% trans "You don't have permission to edit anything." %}</p>
+        {% endif %}
     {% endfor %}
-{% else %}
-    <p>{% trans "You don't have permission to edit anything." %}</p>
-{% endif %}
+    
 </div>
-{% endfor %}
-</div>
+<div class="clear"></div>
 {% endblock %}
 
 {% block sidebar %}
