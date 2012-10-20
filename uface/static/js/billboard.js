@@ -9,6 +9,7 @@ jQuery(function($){
     
     function _renderDialog() {
         //console.log(moduleBox);
+        /*
         var pos,
             x = 0,
             y = 300,
@@ -44,6 +45,7 @@ jQuery(function($){
         if (seth) {
             $("body").height(h);
         }
+        */
     }
     
     function _getBoxData(id) {
