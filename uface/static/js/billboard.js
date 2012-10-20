@@ -14,7 +14,18 @@ jQuery(function($){
     }
     
     function _saveOrder() {
-        
+        var data = [];
+        $(".bbapp-region").each(function(index, value){
+            var colid = value.id,
+                order = $('#' + colid).sortable("toArray"),
+                i, n;
+                
+            for (i = 0; i < order.length; ++i) {
+                //console.log(index, i, order[i]);
+                data.push({'modcol': index, 'modweight': i, 'modname': order[i]})
+            }
+        });
+        //console.log(data);
     }
     
     
