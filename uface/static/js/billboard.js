@@ -3,9 +3,20 @@ jQuery(function($){
     
     function _init() {
         _load();
-        
+        _goPortlets();
+    }
+    
+    function _goPortlets() {
+        $(".bbapp-region").sortable({
+            connectWith: ['.bbapp-region'],
+            stop: function() { _saveOrder(); }
+        }); 
+    }
+    
+    function _saveOrder() {
         
     }
+    
     
     function _renderDialog() {
         //console.log(moduleBox);
@@ -64,7 +75,7 @@ jQuery(function($){
             url: "/bb/load/",
             success: function(data) {
                 moduleBox = data.jsbox;
-                _renderDialog();
+                //_renderDialog();
                 _renderBillboard(data.messages);
             },
             dataType: "json"
