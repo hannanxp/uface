@@ -17,12 +17,17 @@ jQuery(function($){
         var data = "";
         $(".bbapp-region").each(function(index, value){
             var colid = value.id,
-                order = $('#' + colid).sortable("toArray"),
-                i, n;
+                order,
+                i,
+                modname;
+                
+            order = $('#' + colid).sortable("toArray");
                 
             for (i = 0; i < order.length; ++i) {
                 //console.log(index, i, order[i]);
-                data = data + ",[" + index + "," + i + "," + order[i] + "]";
+                modname = order[i];
+                modname = modname.substring(6);
+                data = data + "," + index + ":" + i + ":" + modname;
             }
             
         });

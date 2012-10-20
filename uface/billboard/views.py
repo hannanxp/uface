@@ -4,6 +4,7 @@ from django.utils import simplejson
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from billboard.models import BillboardUserModuleBox
+from billboard.models import BbApps
 from postman.models import Message
 
 def _get_messages(user):
@@ -80,13 +81,20 @@ def saveapps(request):
     user = user_from_session_key(request.session.session_key)
     apps = request.POST['apps']
     
+    apps_data = apps.split(',')
+    for row in apps_data:
+        obj = row.split(':')
+        modcol = obj[0]
+        modweight = obj[1]
+        modname = obj[2]
+        #print modcol, modweight, modname, '--------------'
+        get_or_create_bbapp(user, modcol, modweight, modname)
     
     data = {}
     ret = simplejson.dumps(data)
     
     return HttpResponse(ret, 'application/javascript')
     
-
     
 # Mark message to archived by reader
 def acceptmsg(request):
@@ -120,5 +128,16 @@ def get_or_create_userbox(user, modname):
         box = BillboardUserModuleBox.objects.get(user=user, modname=modname)
     except ObjectDoesNotExist:
         box = BillboardUserModuleBox(user=user, modname=modname, posx=-1, posy=-1)
+        box.save()
+    return box
+
+def get_or_create_bbapp(user, modcol, modweight, modname):
+    try:
+        box = BbApps.objects.get(user=user, modname=modname)
+        box.modcol = modcol
+        box.modweight = modweight
+        box.save()
+    except ObjectDoesNotExist:
+        box = BbApps(user=user, modcol=modcol, modweight=modweight, modname=modname)
         box.save()
     return box
