@@ -88,11 +88,14 @@
     clear: both;
 }
 
-
+/* Portlets */
 .bbapp-region {
     background: #fff;
     float: left;
     margin-right: 5px;
     padding: 10px;
     width: 295px;
+    min-height: 50px;
 }
+.ui-sortable-placeholder { border: 1px dotted black; visibility: visible !important; height: 50px !important; }
+.ui-sortable-placeholder * { visibility: hidden; }
