@@ -31,7 +31,7 @@
 
 {% block breadcrumbs %}{% endblock %}
 
-{% block billboard %}
+{% block content %}
     <div id="billboard">
         <h2>BILLBOARD/LATEST ANNOUNCEMENTS</h2>
         <div class="billboard-panels">
@@ -52,9 +52,6 @@
         <div id="billboard-message"></div>
         <div id="bb-token" style="display:none">{{ csrf_token }}</div>
     </div>
-{% endblock %}
-
-{% block content %}
 <div id="content-main">
     
     {% billboard_apps app_list as bb_items %}
