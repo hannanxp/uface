@@ -1,11 +1,6 @@
 """
-Produce re-ordering module apps at admin index page
-into several columns of app items
-
-Usage:
-
-    {% billboard_apps app_list as bb_items %}
-
+Produce Billboard Message items and
+re-ordering module apps at admin index page
 """
 
 from django import template
@@ -64,7 +59,11 @@ class BillboarAppNode(template.Node):
 
 @register.tag
 def billboard_apps(parser, token):
-    """Converts app_list into custom order list"""
+    """
+    Converts app_list into into several columns of app items
+    Usage:
+        {% billboard_apps app_list as bb_items %}
+    """
     try:
         tag_name, target_name, the_as, var_name = token.split_contents()
     except ValueError:
