@@ -56,6 +56,18 @@ class BillboarAppNode(template.Node):
         context[self.var_name] = items
         
         return ''
+    
+class BillboarMessagesNode(template.Node):
+    def __init__(self, var_name):
+        self.var_name = var_name
+
+    def render(self, context):
+        
+        user = context['user']
+        
+        context[self.var_name] = user
+        
+        return ''
 
 @register.tag
 def billboard_apps(parser, token):
@@ -75,3 +87,20 @@ def billboard_apps(parser, token):
     target = parser.compile_filter(target_name)
     
     return BillboarAppNode(target, var_name)
+    
+@register.tag
+def billboard_messages(parser, token):
+    """
+    Produce Billboard Message Items
+    Usage:
+        {% billboard_messages as bb_messages %}
+    """
+    try:
+        tag_name, the_as, var_name = token.split_contents()
+    except ValueError:
+        raise template.TemplateSyntaxError("%r tag requires exactly two arguments" % token.contents.split()[0])
+        
+    if the_as != 'as':
+        raise template.TemplateSyntaxError("first argument to %r tag must be 'as'" % token.contents.split()[0])
+    
+    return BillboarMessagesNode(var_name)
