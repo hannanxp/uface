@@ -37,6 +37,36 @@
     <div id="billboard">
         <h2>BILLBOARD/LATEST ANNOUNCEMENTS</h2>
         <div class="billboard-panels">
+        {% for bb_cols in bb_messages %}
+            <div id="billboard-{{bb_cols.col}}" class="billboard-pane">
+                <h3>{{bb_cols.title}}</h3>
+                <div class="billboard-content">
+                {% for bb_item in bb_cols.msgs %}
+                    <div class="msg-item {{bb_item.c}}">
+                        [&bull;]
+                        <span class="msg-subject">{{bb_item.s}}</span>
+                        <span class="msg-body">{{bb_item.b}}</span>
+                        <span class="msg-id">{{bb_item.id}}</span>
+                    </div>
+                {% endfor %}    
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="billboard-clean"></div>
+        <div id="billboard-message"></div>
+    </div>
+    <div id="bb-token" style="display:none">{{ csrf_token }}</div>
+    
+    
+    
+    
+    
+    
+    <!--
+    <div id="billboard">
+        <h2>BILLBOARD/LATEST ANNOUNCEMENTS</h2>
+        <div class="billboard-panels">
             <div id="billboard-i" class="billboard-pane">
                 <h3>IMPORTANT</h3>
                 <div class="billboard-content"></div>
@@ -54,6 +84,8 @@
         <div id="billboard-message"></div>
         <div id="bb-token" style="display:none">{{ csrf_token }}</div>
     </div>
+    -->
+    
 <div id="content-main">
     
     {% billboard_apps app_list as bb_items %}

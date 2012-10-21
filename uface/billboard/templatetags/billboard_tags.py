@@ -4,9 +4,10 @@ re-ordering module apps at admin index page
 """
 
 from django import template
-from billboard.models import BbApps
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
+from billboard.models import BbApps
+from postman.models import Message
 
 register = template.Library()
 
@@ -65,7 +66,46 @@ class BillboarMessagesNode(template.Node):
         
         user = context['user']
         
-        context[self.var_name] = user
+        bb_messages = []
+        msgs_i = []
+        msgs_p = []
+        msgs_u = []
+        messages = Message.objects.filter(recipient=user)
+        for msg in messages:
+            
+            if msg.recipient_archived:
+                cname = 'archived'
+            else:
+                cname = ''
+            
+            if msg.category == 'i':
+                msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+            elif msg.category == 'p':
+                msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+            elif msg.category == 'u':
+                msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+    
+        #data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
+        
+        col = {}
+        col['col'] = 'i'
+        col['title'] = 'IMPORTANT'
+        col['msgs'] = msgs_i
+        bb_messages.append(col)
+        
+        col = {}
+        col['col'] = 'p'
+        col['title'] = 'PERSONAL'
+        col['msgs'] = msgs_p
+        bb_messages.append(col)
+        
+        col = {}
+        col['col'] = 'u'
+        col['title'] = 'USEFUL'
+        col['msgs'] = msgs_u
+        bb_messages.append(col)
+        
+        context[self.var_name] = bb_messages
         
         return ''
 

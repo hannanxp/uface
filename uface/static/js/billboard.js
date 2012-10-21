@@ -131,6 +131,7 @@ jQuery(function($){
         //console.log(messages);
         var i, msgs, msg_subject, msg_body, archived ;
         
+        /*
         for (var cat in messages) {
             if (messages.hasOwnProperty(cat)) {
                 //console.log(cat, messages[cat]);
@@ -151,6 +152,7 @@ jQuery(function($){
                 }
             }
          }
+        */
         
         $(".billboard-content .msg-item").live("click", function(){
             var msg_body;
