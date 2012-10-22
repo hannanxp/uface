@@ -70,7 +70,7 @@ class BillboarMessagesNode(template.Node):
         msgs_i = []
         msgs_p = []
         msgs_u = []
-        messages = Message.objects.filter(recipient=user)
+        messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None)
         for msg in messages:
             
             if msg.recipient_archived:
