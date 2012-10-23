@@ -57,7 +57,7 @@ def _delete_msg(user, msg_id):
     return res
 
 def index(request):
-    user = user_from_session_key(request.session.session_key)
+    user = request.user
     data = _get_messages(user)
     ret = simplejson.dumps(data)
     return HttpResponse(ret, 'application/javascript')
@@ -70,7 +70,7 @@ def test(request):
 # Initial ajax request
 def load(request):
     
-    user = user_from_session_key(request.session.session_key)
+    user = request.user
     jsbox = []
     boxes = BillboardUserModuleBox.objects.filter(user=user)
     for box in boxes:
@@ -84,7 +84,7 @@ def load(request):
     
 # Change Box Position
 def chpos(request):
-    user = user_from_session_key(request.session.session_key)
+    user = request.user
     
     box = get_or_create_userbox(user, request.POST['modname'])
     box.posx = request.POST['posx']
@@ -97,7 +97,7 @@ def chpos(request):
     
 # Change Box Position
 def saveapps(request):
-    user = user_from_session_key(request.session.session_key)
+    user = request.user
     apps = request.POST['apps']
     
     apps_data = apps.split(',')
@@ -117,9 +117,9 @@ def saveapps(request):
     
 # Mark message to archived by reader
 def acceptmsg(request):
-    user = user_from_session_key(request.session.session_key)
-    
-    result = _archive_msg(user, request.POST['msg_id'])
+    user = request.user
+    msg_id = request.POST['msg_id']
+    result = _archive_msg(user, msg_id)
     
     data = result
     ret = simplejson.dumps(data)
@@ -130,6 +130,7 @@ def delmsg(request):
     user = request.user
     msg_id = request.POST['msg_id']
     result = _delete_msg(user, msg_id)
+    
     data = result
     ret = simplejson.dumps(data)
     return HttpResponse(ret, 'application/javascript')
