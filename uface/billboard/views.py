@@ -6,6 +6,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from billboard.models import BillboardUserModuleBox
 from billboard.models import BbApps
 from postman.models import Message
+try:
+    from django.utils.timezone import now   # Django 1.4 aware datetimes
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 def _get_messages(user):
     msgs_i = []
@@ -28,6 +33,20 @@ def _archive_msg(user, msg_id):
     message = ''
     if msg.recipient == user:
         msg.recipient_archived = 1
+        msg.save()
+        status = True
+    else:
+        status = False
+        message = 'User is not the message recipien'
+    
+    res = {'status': status, 'message': message, 'msg_id': msg_id}
+    return res
+
+def _delete_msg(user, msg_id):
+    msg = Message.objects.get(pk=msg_id)
+    message = ''
+    if msg.recipient == user:
+        msg.recipient_deleted_at = now()
         msg.save()
         status = True
     else:
@@ -102,6 +121,15 @@ def acceptmsg(request):
     
     result = _archive_msg(user, request.POST['msg_id'])
     
+    data = result
+    ret = simplejson.dumps(data)
+    return HttpResponse(ret, 'application/javascript')
+
+# Delete message by recipient
+def delmsg(request):
+    user = request.user
+    msg_id = request.POST['msg_id']
+    result = _delete_msg(user, msg_id)
     data = result
     ret = simplejson.dumps(data)
     return HttpResponse(ret, 'application/javascript')

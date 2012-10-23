@@ -2,18 +2,24 @@ jQuery(function($){
     
     function _init() {
         
+        // popup dialog
         $(".billboard-content .msg-item").live("click", function(){
             var msg_body;
             
             msg_body = $(this).find(".msg-body").html() +
                 "<div class='msg-options'>[ <span class='msg-option accept' title='"
                 + $(this).find(".msg-id").html() + "'>"
-                + "OK, I understand</span> ]</div>";
+                + "OK, I understand</span> ]"
+                + "&nbsp;&nbsp;[ <span class='msg-option delete' title='"
+                + $(this).find(".msg-id").html() + "'>"
+                + "Delete</span> ]"
+                + "</div>";
             $("#billboard-message").html(msg_body);
             $("#billboard-message").dialog();
             $("#billboard-message").dialog('option', 'title', $(this).find(".msg-subject").html());
         });
         
+        // accept message
         $(".msg-options .accept").live("click", function(){
             var msg_id = $(this).attr('title'),
                 bbtoken = $("#bb-token").html();
@@ -26,6 +32,26 @@ jQuery(function($){
                     //console.log(data);
                     //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
                     $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
+                    $("#billboard-message").dialog( "close" );
+                },
+                dataType: "json"
+            });
+            
+        });
+        
+        // delete message
+        $(".msg-options .delete").live("click", function(){
+            var msg_id = $(this).attr('title'),
+                bbtoken = $("#bb-token").html();
+                
+            $.ajax({
+                url: "/bb/delmsg/",
+                type: 'POST',
+                data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
+                success: function(data) {
+                    //console.log(data);
+                    //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
+                    $(".msg-id:contains('"+data.msg_id+"')").parent().hide();
                     $("#billboard-message").dialog( "close" );
                 },
                 dataType: "json"

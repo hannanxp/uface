@@ -6,5 +6,6 @@ urlpatterns = patterns('billboard.views',
     url(r'^load/$', 'load'),
     url(r'^chpos/$', 'chpos'),
     url(r'^acceptmsg/$', 'acceptmsg'),
+    url(r'^delmsg/$', 'delmsg'),
     url(r'^saveapps/$', 'saveapps'),
 )
