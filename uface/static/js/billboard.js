@@ -9,19 +9,6 @@ jQuery(function($){
                 msg_category = $(this).find(".msg-category").html(),
                 dialog_cname = 'bb-msg-dialog',
                 bbtoken = $("#bb-token").html();
-            
-            console.log(msg_category);
-            //msg_body = $(this).find(".msg-body").html()
-                /*
-                +
-                "<div class='msg-options'>[ <span class='msg-option accept' title='"
-                + $(this).find(".msg-id").html() + "'>"
-                + "OK, I understand</span> ]"
-                + "&nbsp;&nbsp;[ <span class='msg-option delete' title='"
-                + $(this).find(".msg-id").html() + "'>"
-                + "Delete</span> ]"
-                + "</div>";
-                */
                 
             $("#billboard-message").html(msg_body);
             $("#billboard-message").dialog({
@@ -36,14 +23,12 @@ jQuery(function($){
                             type: 'POST',
                             data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
                             success: function(data) {
-                                //console.log(data);
-                                //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
                                 $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
                                 $("#billboard-message").dialog( "close" );
                             },
                             dataType: "json"
                         });
-                        //$(this).dialog("close");
+                        
                     },
                     "Delete": function() {
                         $.ajax({
@@ -51,14 +36,12 @@ jQuery(function($){
                             type: 'POST',
                             data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
                             success: function(data) {
-                                //console.log(data);
-                                //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
                                 $(".msg-id:contains('"+data.msg_id+"')").parent().hide();
                                 $("#billboard-message").dialog( "close" );
                             },
                             dataType: "json"
                         });
-                        //$(this).dialog("close");
+                        
                     },
                     "Reply": function() {
                         $(this).dialog("close");
@@ -74,48 +57,6 @@ jQuery(function($){
             }
             
         });
-        
-        /*
-        // accept message
-        $(".msg-options .accept").live("click", function(){
-            var msg_id = $(this).attr('title'),
-                bbtoken = $("#bb-token").html();
-                
-            $.ajax({
-                url: "/bb/acceptmsg/",
-                type: 'POST',
-                data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
-                success: function(data) {
-                    //console.log(data);
-                    //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
-                    $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
-                    $("#billboard-message").dialog( "close" );
-                },
-                dataType: "json"
-            });
-            
-        });
-        
-        // delete message
-        $(".msg-options .delete").live("click", function(){
-            var msg_id = $(this).attr('title'),
-                bbtoken = $("#bb-token").html();
-                
-            $.ajax({
-                url: "/bb/delmsg/",
-                type: 'POST',
-                data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
-                success: function(data) {
-                    //console.log(data);
-                    //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
-                    $(".msg-id:contains('"+data.msg_id+"')").parent().hide();
-                    $("#billboard-message").dialog( "close" );
-                },
-                dataType: "json"
-            });
-            
-        });
-        */
         
         $(".bbapp-region").sortable({
             connectWith: ['.bbapp-region'],
