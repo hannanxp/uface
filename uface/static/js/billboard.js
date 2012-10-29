@@ -60,6 +60,9 @@ jQuery(function($){
                         });
                         //$(this).dialog("close");
                     },
+                    "Reply": function() {
+                        $(this).dialog("close");
+                    }
                 }
             });
             
