@@ -42,7 +42,7 @@
                 <h3>{{bb_cols.title}}</h3>
                 <div class="billboard-content">
                 {% for bb_item in bb_cols.msgs %}
-                    <div class="msg-item {{bb_item.c}}">
+                    <div class="msg-item {{bb_item.c}}" id="msg-item-{{bb_item.id}}">
                         [&bull;]
                         <span class="msg-subject">{{bb_item.s}}</span>
                         <span class="msg-body">{{bb_item.b|linebreaksbr}}</span>

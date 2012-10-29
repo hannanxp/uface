@@ -23,7 +23,7 @@ jQuery(function($){
                             type: 'POST',
                             data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
                             success: function(data) {
-                                $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
+                                $("#msg-item-"+data.msg_id).addClass("archived");
                                 $("#billboard-message").dialog( "close" );
                             },
                             dataType: "json"
@@ -36,7 +36,7 @@ jQuery(function($){
                             type: 'POST',
                             data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
                             success: function(data) {
-                                $(".msg-id:contains('"+data.msg_id+"')").parent().hide();
+                                $("#msg-item-"+data.msg_id).addClass("archived");
                                 $("#billboard-message").dialog( "close" );
                             },
                             dataType: "json"
