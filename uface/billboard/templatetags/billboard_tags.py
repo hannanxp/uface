@@ -79,11 +79,11 @@ class BillboarMessagesNode(template.Node):
                 cname = ''
             
             if msg.category == 'i':
-                msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+                msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
             elif msg.category == 'p':
-                msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+                msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
             elif msg.category == 'u':
-                msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname})
+                msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
     
         #data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
         

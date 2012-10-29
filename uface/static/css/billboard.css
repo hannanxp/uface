@@ -76,7 +76,8 @@
     text-decoration: underline;
 }
 .billboard-content .msg-body,
-.billboard-content .msg-id{
+.billboard-content .msg-id,
+.billboard-content .msg-category{
     display: none
 }
 #billboard-i,

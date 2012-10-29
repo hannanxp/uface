@@ -6,9 +6,11 @@ jQuery(function($){
         $(".billboard-content .msg-item").live("click", function(){
             var msg_body = $(this).find(".msg-body").html(),
                 msg_id = $(this).find(".msg-id").html(),
+                msg_category = $(this).find(".msg-category").html(),
+                dialog_cname = 'bb-msg-dialog',
                 bbtoken = $("#bb-token").html();
             
-            
+            console.log(msg_category);
             //msg_body = $(this).find(".msg-body").html()
                 /*
                 +
@@ -23,6 +25,7 @@ jQuery(function($){
                 
             $("#billboard-message").html(msg_body);
             $("#billboard-message").dialog({
+                dialogClass : dialog_cname,
                 title: $(this).find(".msg-subject").html(),
                 width: 600,
                 height: 300,
@@ -59,6 +62,13 @@ jQuery(function($){
                     },
                 }
             });
+            
+            if (msg_category != 'p') {
+                $( '.' + dialog_cname + ' .ui-dialog-buttonpane button:contains("Delete")').attr('disabled', true );
+            }
+            else {
+                $( '.' + dialog_cname + ' .ui-dialog-buttonpane button:contains("Delete")').attr('disabled', false );
+            }
             
         });
         
