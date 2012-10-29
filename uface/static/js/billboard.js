@@ -4,9 +4,14 @@ jQuery(function($){
         
         // popup dialog
         $(".billboard-content .msg-item").live("click", function(){
-            var msg_body;
+            var msg_body = $(this).find(".msg-body").html(),
+                msg_id = $(this).find(".msg-id").html(),
+                bbtoken = $("#bb-token").html();
             
-            msg_body = $(this).find(".msg-body").html() +
+            
+            //msg_body = $(this).find(".msg-body").html()
+                /*
+                +
                 "<div class='msg-options'>[ <span class='msg-option accept' title='"
                 + $(this).find(".msg-id").html() + "'>"
                 + "OK, I understand</span> ]"
@@ -14,11 +19,50 @@ jQuery(function($){
                 + $(this).find(".msg-id").html() + "'>"
                 + "Delete</span> ]"
                 + "</div>";
+                */
+                
             $("#billboard-message").html(msg_body);
-            $("#billboard-message").dialog();
-            $("#billboard-message").dialog('option', 'title', $(this).find(".msg-subject").html());
+            $("#billboard-message").dialog({
+                title: $(this).find(".msg-subject").html(),
+                width: 600,
+                height: 300,
+                buttons: {
+                    "Ok, I understand": function() {
+                        $.ajax({
+                            url: "/bb/acceptmsg/",
+                            type: 'POST',
+                            data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
+                            success: function(data) {
+                                //console.log(data);
+                                //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
+                                $(".msg-id:contains('"+data.msg_id+"')").parent().addClass("archived");
+                                $("#billboard-message").dialog( "close" );
+                            },
+                            dataType: "json"
+                        });
+                        //$(this).dialog("close");
+                    },
+                    "Delete": function() {
+                        $.ajax({
+                            url: "/bb/delmsg/",
+                            type: 'POST',
+                            data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
+                            success: function(data) {
+                                //console.log(data);
+                                //console.log($(".msg-id:contains('"+data.msg_id+"')").parent());
+                                $(".msg-id:contains('"+data.msg_id+"')").parent().hide();
+                                $("#billboard-message").dialog( "close" );
+                            },
+                            dataType: "json"
+                        });
+                        //$(this).dialog("close");
+                    },
+                }
+            });
+            
         });
         
+        /*
         // accept message
         $(".msg-options .accept").live("click", function(){
             var msg_id = $(this).attr('title'),
@@ -58,6 +102,7 @@ jQuery(function($){
             });
             
         });
+        */
         
         $(".bbapp-region").sortable({
             connectWith: ['.bbapp-region'],
