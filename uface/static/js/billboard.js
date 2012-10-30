@@ -12,6 +12,17 @@ jQuery(function($){
                 msg_sent_at = $(this).find(".msg-send-at").html(),
                 dialog_cname = 'bb-msg-dialog',
                 bbtoken = $("#bb-token").html();
+                
+            // set as read
+            $.ajax({
+                url: "/bb/readmsg/",
+                type: 'POST',
+                data: {msg_id:msg_id, csrfmiddlewaretoken: bbtoken},
+                success: function(data) {
+                    $("#msg-item-"+data.msg_id).removeClass("un-read");
+                },
+                dataType: "json"
+            });
             
             msg_body = "<p class='msg-sender-sent-header'><b>"+msg_sender+"</b> &raquo; "+msg_recipient+" | "+msg_sent_at+"</p>";
             msg_body += $(this).find(".msg-body").html();

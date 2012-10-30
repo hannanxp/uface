@@ -25,6 +25,20 @@ def _archive_msg(user, msg_id):
     res = {'status': status, 'message': message, 'msg_id': msg_id}
     return res
 
+def _read_msg(user, msg_id):
+    msg = Message.objects.get(pk=msg_id)
+    message = ''
+    if msg.recipient == user:
+        msg.read_at = now()
+        msg.save()
+        status = True
+    else:
+        status = False
+        message = 'User is not the message recipien'
+    
+    res = {'status': status, 'message': message, 'msg_id': msg_id}
+    return res
+
 def _delete_msg(user, msg_id):
     msg = Message.objects.get(pk=msg_id)
     message = ''
@@ -69,6 +83,16 @@ def acceptmsg(request):
     user = request.user
     msg_id = request.POST['msg_id']
     result = _archive_msg(user, msg_id)
+    
+    data = result
+    ret = simplejson.dumps(data)
+    return HttpResponse(ret, 'application/javascript')
+
+# Set read_at status
+def readmsg(request):
+    user = request.user
+    msg_id = request.POST['msg_id']
+    result = _read_msg(user, msg_id)
     
     data = result
     ret = simplejson.dumps(data)
