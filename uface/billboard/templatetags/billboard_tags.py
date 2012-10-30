@@ -71,19 +71,31 @@ class BillboarMessagesNode(template.Node):
         msgs_p = []
         msgs_u = []
         messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None)
+        #kwargs = {}
+        #messages = getattr(Message.objects, 'inbox')(user, **kwargs)
+        
         for msg in messages:
             
             if msg.recipient_archived:
-                cname = 'archived'
+                classname_archived = 'archived'
             else:
-                cname = ''
+                classname_archived = ''
+                
+            mm_obj = {}
+            mm_obj['id'] = msg.id
+            mm_obj['subject'] = msg.subject
+            mm_obj['body'] = msg.body
+            mm_obj['recipient_archived'] = msg.recipient_archived
+            mm_obj['classname_archived'] = classname_archived
+            mm_obj['category'] = msg.category
+            mm_obj['obfuscated_sender'] = msg.obfuscated_sender
             
             if msg.category == 'i':
-                msgs_i.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
+                msgs_i.append(mm_obj)
             elif msg.category == 'p':
-                msgs_p.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
+                msgs_p.append(mm_obj)
             elif msg.category == 'u':
-                msgs_u.append({'id': msg.id,'s': msg.subject,'b': msg.body,'a': msg.recipient_archived,'c':cname,'t':msg.category})
+                msgs_u.append(mm_obj)
     
         #data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
         
