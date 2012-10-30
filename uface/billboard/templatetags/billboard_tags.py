@@ -7,7 +7,7 @@ from django import template
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
 from billboard.models import BbApps
-from postman.models import Message
+from postman.models import *
 
 register = template.Library()
 
@@ -65,65 +65,43 @@ class BillboarMessagesNode(template.Node):
     def render(self, context):
         
         user = context['user']
-        
         bb_messages = []
-        msgs_i = []
-        msgs_p = []
-        msgs_u = []
-        messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None)
-        #kwargs = {}
-        #messages = getattr(Message.objects, 'inbox')(user, **kwargs)
         
-        for msg in messages:
+        for catid,catname in CATEGORY_CHOICES:
+            msgs = []
+            messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None, category=catid)
             
-            if msg.recipient_archived:
-                classname_archived = 'archived'
-            else:
-                classname_archived = ''
+            for msg in messages:
                 
-            if msg.read_at:
-                classname_read = ''
-            else:
-                classname_read = 'un-read'
+                if msg.recipient_archived:
+                    classname_archived = 'archived'
+                else:
+                    classname_archived = ''
+                    
+                if msg.read_at:
+                    classname_read = ''
+                else:
+                    classname_read = 'un-read'
+                    
+                mm_obj = {}
+                mm_obj['id'] = msg.id
+                mm_obj['subject'] = msg.subject
+                mm_obj['body'] = msg.body
+                mm_obj['recipient_archived'] = msg.recipient_archived
+                mm_obj['classname_archived'] = classname_archived
+                mm_obj['classname_read'] = classname_read
+                mm_obj['category'] = msg.category
+                mm_obj['obfuscated_sender'] = msg.obfuscated_sender
+                mm_obj['obfuscated_recipient'] = msg.obfuscated_recipient
+                mm_obj['sent_at'] = msg.sent_at
                 
-            mm_obj = {}
-            mm_obj['id'] = msg.id
-            mm_obj['subject'] = msg.subject
-            mm_obj['body'] = msg.body
-            mm_obj['recipient_archived'] = msg.recipient_archived
-            mm_obj['classname_archived'] = classname_archived
-            mm_obj['classname_read'] = classname_read
-            mm_obj['category'] = msg.category
-            mm_obj['obfuscated_sender'] = msg.obfuscated_sender
-            mm_obj['obfuscated_recipient'] = msg.obfuscated_recipient
-            mm_obj['sent_at'] = msg.sent_at
-            
-            if msg.category == 'i':
-                msgs_i.append(mm_obj)
-            elif msg.category == 'p':
-                msgs_p.append(mm_obj)
-            elif msg.category == 'u':
-                msgs_u.append(mm_obj)
-    
-        #data = {'i': msgs_i, 'p': msgs_p, 'u': msgs_u}
-        
-        col = {}
-        col['col'] = 'i'
-        col['title'] = 'IMPORTANT'
-        col['msgs'] = msgs_i
-        bb_messages.append(col)
-        
-        col = {}
-        col['col'] = 'p'
-        col['title'] = 'PERSONAL'
-        col['msgs'] = msgs_p
-        bb_messages.append(col)
-        
-        col = {}
-        col['col'] = 'u'
-        col['title'] = 'USEFUL'
-        col['msgs'] = msgs_u
-        bb_messages.append(col)
+                msgs.append(mm_obj)
+                    
+            col = {}
+            col['col'] = catid
+            col['title'] = catname
+            col['msgs'] = msgs
+            bb_messages.append(col)
         
         context[self.var_name] = bb_messages
         
