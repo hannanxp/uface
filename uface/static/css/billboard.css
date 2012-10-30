@@ -82,9 +82,14 @@
     font-weight: bold;    
 }
 .billboard-content .msg-body,
+.billboard-content .msg-recipient,
 .billboard-content .msg-id,
 .billboard-content .msg-category{
     display: none
+}
+.msg-sender-sent-header {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
 }
 #billboard-i,
 #billboard-p {

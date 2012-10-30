@@ -4,18 +4,24 @@ jQuery(function($){
         
         // popup dialog
         $(".billboard-content .msg-item").live("click", function(){
-            var msg_body = $(this).find(".msg-body").html(),
+            var msg_body,
                 msg_id = $(this).find(".msg-id").html(),
                 msg_category = $(this).find(".msg-category").html(),
+                msg_sender = $(this).find(".msg-sender").html(),
+                msg_recipient = $(this).find(".msg-recipient").html(),
+                msg_sent_at = $(this).find(".msg-send-at").html(),
                 dialog_cname = 'bb-msg-dialog',
                 bbtoken = $("#bb-token").html();
+            
+            msg_body = "<p class='msg-sender-sent-header'><b>"+msg_sender+"</b> &raquo; "+msg_recipient+" | "+msg_sent_at+"</p>";
+            msg_body += $(this).find(".msg-body").html();
                 
             $("#billboard-message").html(msg_body);
             $("#billboard-message").dialog({
                 dialogClass : dialog_cname,
                 title: $(this).find(".msg-subject").html(),
                 width: 600,
-                height: 300,
+                height: 350,
                 buttons: {
                     "Ok, I understand": function() {
                         $.ajax({

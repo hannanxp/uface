@@ -47,6 +47,7 @@
                         
                         <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}}</span>
                         <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}</span>
+                        <span class="msg-recipient">{{bb_item.obfuscated_recipient|or_me:user}}</span>
                         :
                         <span class="msg-subject">{{bb_item.subject}}</span>
                         <span class="msg-body">{{bb_item.body|linebreaksbr}}</span>
