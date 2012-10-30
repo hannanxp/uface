@@ -89,6 +89,7 @@ class BillboarMessagesNode(template.Node):
             mm_obj['classname_archived'] = classname_archived
             mm_obj['category'] = msg.category
             mm_obj['obfuscated_sender'] = msg.obfuscated_sender
+            mm_obj['sent_at'] = msg.sent_at
             
             if msg.category == 'i':
                 msgs_i.append(mm_obj)

@@ -59,7 +59,7 @@
 }
 .billboard-content .msg-item:hover {
     text-decoration: none;
-    color: #00f;
+    color: #f96;
 }
 .billboard-content .archived {
     text-decoration: line-through;
@@ -74,6 +74,12 @@
 }
 #billboard-message .msg-option:hover {
     text-decoration: underline;
+}
+.billboard-content .msg-sender {
+    font-style: italic;
+}
+.billboard-content .msg-subject {
+    font-weight: bold;    
 }
 .billboard-content .msg-body,
 .billboard-content .msg-id,
