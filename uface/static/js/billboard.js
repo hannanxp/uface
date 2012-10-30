@@ -10,6 +10,7 @@ jQuery(function($){
                 msg_sender = $(this).find(".msg-sender").html(),
                 msg_recipient = $(this).find(".msg-recipient").html(),
                 msg_sent_at = $(this).find(".msg-send-at").html(),
+                msg_recipient_archived = $(this).find(".msg-recipient-archived").html(),
                 dialog_cname = 'bb-msg-dialog',
                 bbtoken = $("#bb-token").html();
                 
@@ -66,6 +67,15 @@ jQuery(function($){
                 }
             });
             
+            // enable/disable ok button
+            if (msg_recipient_archived == 'True') {
+                $( '.' + dialog_cname + ' .ui-dialog-buttonpane button:contains("Ok")').attr('disabled', true );
+            }
+            else {
+                $( '.' + dialog_cname + ' .ui-dialog-buttonpane button:contains("Ok")').attr('disabled', false );
+            }
+            
+            // enable/disable delete button
             if (msg_category != 'p') {
                 $( '.' + dialog_cname + ' .ui-dialog-buttonpane button:contains("Delete")').attr('disabled', true );
             }

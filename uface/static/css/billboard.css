@@ -87,7 +87,8 @@
 .billboard-content .msg-body,
 .billboard-content .msg-recipient,
 .billboard-content .msg-id,
-.billboard-content .msg-category{
+.billboard-content .msg-category,
+.billboard-content .msg-recipient-archived{
     display: none
 }
 .msg-sender-sent-header {
