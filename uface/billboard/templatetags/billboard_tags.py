@@ -81,12 +81,18 @@ class BillboarMessagesNode(template.Node):
             else:
                 classname_archived = ''
                 
+            if msg.read_at:
+                classname_read = ''
+            else:
+                classname_read = 'un-read'
+                
             mm_obj = {}
             mm_obj['id'] = msg.id
             mm_obj['subject'] = msg.subject
             mm_obj['body'] = msg.body
             mm_obj['recipient_archived'] = msg.recipient_archived
             mm_obj['classname_archived'] = classname_archived
+            mm_obj['classname_read'] = classname_read
             mm_obj['category'] = msg.category
             mm_obj['obfuscated_sender'] = msg.obfuscated_sender
             mm_obj['obfuscated_recipient'] = msg.obfuscated_recipient

@@ -65,6 +65,9 @@
     text-decoration: line-through;
     font-style: italic;
 }
+.billboard-content .un-read {
+    color: #00f;
+}
 #billboard-message .msg-options {
     margin-top: 20px;
 }

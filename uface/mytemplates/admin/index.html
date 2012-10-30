@@ -43,7 +43,7 @@
                 <h3>{{bb_cols.title}}</h3>
                 <div class="billboard-content">
                 {% for bb_item in bb_cols.msgs %}
-                    <div class="msg-item {{bb_item.classname_archived}}" id="msg-item-{{bb_item.id}}">
+                    <div class="msg-item {{bb_item.classname_archived}} {{bb_item.classname_read}}" id="msg-item-{{bb_item.id}}">
                         
                         <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}}</span>
                         <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}</span>
