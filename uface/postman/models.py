@@ -78,7 +78,7 @@ class MessageManager(models.Manager):
         return self.filter(thread__isnull=False).values('thread').annotate(models.Max('pk'))\
             .values_list('pk__max', flat=True).order_by()
 
-    def _folder(self, related, filters, option=None, order_by=None):
+    def _folder(self, related, filters, option=None, order_by=None, category=None):
         """Base code, in common to the folders."""
         if related:
             qs = self.select_related(*related)
@@ -112,6 +112,7 @@ class MessageManager(models.Manager):
         """
         Return accepted messages received by a user but not marked as archived or deleted.
         """
+        print kwargs
         related = ('sender',) if related else None
         filters = {
             'recipient': user,
@@ -119,6 +120,9 @@ class MessageManager(models.Manager):
             'recipient_deleted_at__isnull': True,
             'moderation_status': STATUS_ACCEPTED,
         }
+        if 'category' in kwargs:
+            filters['category'] = kwargs['category']
+            
         return self._folder(related, filters, **kwargs)
 
     def inbox_unread_count(self, user):

@@ -42,6 +42,10 @@ def _folder(request, folder_name, view_name, option, template_name):
     order_by = get_order_by(request.GET)
     if order_by:
         kwargs.update(order_by=order_by)
+    if 'c' in request.GET:
+        category = request.GET['c']
+        if category:
+            kwargs.update(category=category)
     msgs = getattr(Message.objects, folder_name)(request.user, **kwargs)
     return render_to_response(template_name, {
         'pm_messages': msgs,    # avoid 'messages', already used by contrib.messages
