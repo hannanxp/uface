@@ -99,6 +99,8 @@ class BillboarMessagesNode(template.Node):
                 mm_obj['count'] = msg.count
                 mm_obj['is_new'] = msg.is_new
                 mm_obj['is_replied'] = msg.is_replied
+                mm_obj['thread_id'] = msg.thread_id
+                
                 
                 msgs.append(mm_obj)
                     

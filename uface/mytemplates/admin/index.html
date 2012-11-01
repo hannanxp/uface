@@ -52,7 +52,8 @@
                         <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}},</span>
                         <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}{% if bb_item.count %} ({{ bb_item.count }}){% endif %}:</span>
                         <span class="msg-recipient">{{bb_item.obfuscated_recipient|or_me:user}}</span>
-                        <span class="msg-subject"><a href="#">{{bb_item.subject}}</a>
+                        <span class="msg-subject"><a
+                            href="{% if bb_item.thread_id %}{% url 'postman_view_conversation' bb_item.thread_id %}{% else %}{{request.get_full_path}}{% endif %}?next={{ request.get_full_path|urlencode }}">{{bb_item.subject}}</a>
                         </span>
                         <span class="msg-id">{{bb_item.id}}</span>
                         <span class="msg-category">{{bb_item.category}}</span>
