@@ -55,18 +55,20 @@
 .billboard-content .msg-item {
     margin-bottom: 10px;
     margin-left: 5px;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
+/*
 .billboard-content .msg-item:hover {
     text-decoration: none;
     color: #f96;
 }
+*/
 .billboard-content .archived {
     text-decoration: line-through;
     font-style: italic;
 }
 .billboard-content .un-read {
-    color: #00f;
+    color: #f96;
 }
 #billboard-message .msg-options {
     margin-top: 20px;
@@ -79,10 +81,10 @@
     text-decoration: underline;
 }
 .billboard-content .msg-sender {
-    font-style: italic;
+    
 }
 .billboard-content .msg-subject {
-    font-weight: bold;    
+    
 }
 .billboard-content .msg-body,
 .billboard-content .msg-recipient,

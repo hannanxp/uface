@@ -1,7 +1,8 @@
 {% extends "admin/base_site.html" %}
 {% load i18n admin_static %}
 {% load billboard_tags %}
-{% load postman_tags %}
+{% load url from future %}
+{% load i18n postman_tags %}{% load pagination_tags %}
 
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="/static/js/jquery_ui/themes/redmond/jquery.ui.all.css">
@@ -43,14 +44,18 @@
                 <h3>{{bb_cols.title}}</h3>
                 <div class="billboard-content">
                 {% for bb_item in bb_cols.msgs %}
-                    <div class="msg-item {{bb_item.classname_archived}} {{bb_item.classname_read}}" id="msg-item-{{bb_item.id}}">
+                    <div class="msg-item" id="msg-item-{{bb_item.id}}">
                         
-                        <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}}</span>
-                        <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}</span>
+                        <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}},</span>
+                        <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}{% if bb_item.count %} ({{ bb_item.count }}){% endif %}:</span>
                         <span class="msg-recipient">{{bb_item.obfuscated_recipient|or_me:user}}</span>
-                        :
-                        <span class="msg-subject">{{bb_item.subject}}</span>
-                        <span class="msg-body">{{bb_item.body|linebreaksbr}}</span>
+                        <span class="msg-subject">
+                            {% if bb_item.is_new %}<strong class="un-read">{% endif %}{% if bb_item.is_replied %}<em>{% endif %}
+                                <a href="#">
+                                {{bb_item.subject}}
+                                </a>
+                            {% if bb_item.is_replied %}</em>{% endif %}{% if bb_item.is_new %}</strong>{% endif %}
+                        </span>
                         <span class="msg-id">{{bb_item.id}}</span>
                         <span class="msg-category">{{bb_item.category}}</span>
                         <span class="msg-recipient-archived">{{bb_item.recipient_archived}}</span>

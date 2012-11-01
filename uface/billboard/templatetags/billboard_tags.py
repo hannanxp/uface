@@ -96,6 +96,9 @@ class BillboarMessagesNode(template.Node):
                 mm_obj['obfuscated_sender'] = msg.obfuscated_sender
                 mm_obj['obfuscated_recipient'] = msg.obfuscated_recipient
                 mm_obj['sent_at'] = msg.sent_at
+                mm_obj['count'] = msg.count
+                mm_obj['is_new'] = msg.is_new
+                mm_obj['is_replied'] = msg.is_replied
                 
                 msgs.append(mm_obj)
                     

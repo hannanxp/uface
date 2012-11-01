@@ -2,6 +2,7 @@ jQuery(function($){
     
     function _init() {
         
+        /*
         // popup dialog
         $(".billboard-content .msg-item").live("click", function(){
             var msg_body,
@@ -84,6 +85,7 @@ jQuery(function($){
             }
             
         });
+        */
         
         $(".bbapp-region").sortable({
             connectWith: ['.bbapp-region'],
