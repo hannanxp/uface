@@ -69,7 +69,9 @@ class BillboarMessagesNode(template.Node):
         
         for catid,catname in CATEGORY_CHOICES:
             msgs = []
-            messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None, category=catid)
+            #messages = Message.objects.filter(recipient=user, sender_deleted_at=None, recipient_deleted_at=None, category=catid)
+            kwargs = {'category': catid}
+            messages = getattr(Message.objects, 'inbox')(user, **kwargs)
             
             for msg in messages:
                 
