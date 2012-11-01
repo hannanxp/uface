@@ -44,17 +44,15 @@
                 <h3>{{bb_cols.title}}</h3>
                 <div class="billboard-content">
                 {% for bb_item in bb_cols.msgs %}
-                    <div class="msg-item" id="msg-item-{{bb_item.id}}">
+                    <div class="msg-item
+                        {% if bb_item.is_new %}is-new{% endif %}
+                        {% if bb_item.is_replied %}is-replied{% endif %}
+                        " id="msg-item-{{bb_item.id}}">
                         
                         <span class="msg-send-at">{{bb_item.sent_at|compact_date:_("g:i A,M j,n/j/y")}},</span>
                         <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}{% if bb_item.count %} ({{ bb_item.count }}){% endif %}:</span>
                         <span class="msg-recipient">{{bb_item.obfuscated_recipient|or_me:user}}</span>
-                        <span class="msg-subject">
-                            {% if bb_item.is_new %}<strong class="un-read">{% endif %}{% if bb_item.is_replied %}<em>{% endif %}
-                                <a href="#">
-                                {{bb_item.subject}}
-                                </a>
-                            {% if bb_item.is_replied %}</em>{% endif %}{% if bb_item.is_new %}</strong>{% endif %}
+                        <span class="msg-subject"><a href="#">{{bb_item.subject}}</a>
                         </span>
                         <span class="msg-id">{{bb_item.id}}</span>
                         <span class="msg-category">{{bb_item.category}}</span>
