@@ -192,7 +192,7 @@ def reply(request, message_id, form_class=FullReplyForm, formatters=(format_subj
             exchange_filter=exchange_filter,
             max=max)
         if form.is_valid():
-            is_successful = form.save(parent=parent, auto_moderators=auto_moderators)
+            is_successful = form.save(parent=parent, auto_moderators=auto_moderators, replied_at=now())
             if is_successful:
                 messages.success(request, _("Message successfully sent."), fail_silently=True)
             else:

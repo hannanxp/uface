@@ -73,7 +73,6 @@
 }
 .billboard-content .is-replied a{
     font-style: italic;
-    color: #333;
     text-decoration: underline;
 }
 #billboard-message .msg-options {

@@ -94,7 +94,7 @@ class BaseWriteForm(forms.ModelForm):
         return recipients
 
     @transaction.commit_on_success
-    def save(self, recipient=None, parent=None, auto_moderators=[]):
+    def save(self, recipient=None, parent=None, auto_moderators=[], replied_at=None):
         """
         Save as many messages as there are recipients.
 
@@ -114,6 +114,8 @@ class BaseWriteForm(forms.ModelForm):
         if parent:
             self.instance.parent = parent
             self.instance.thread_id = parent.thread_id
+        if replied_at:
+            self.instance.replied_at = replied_at
         initial_moderation = self.instance.get_moderation()
         initial_dates = self.instance.get_dates()
         initial_status = self.instance.moderation_status
