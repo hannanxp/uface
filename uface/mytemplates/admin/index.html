@@ -53,7 +53,7 @@
                         <span class="msg-sender">{{bb_item.obfuscated_sender|or_me:user}}{% if bb_item.count %} ({{ bb_item.count }}){% endif %}:</span>
                         <span class="msg-recipient">{{bb_item.obfuscated_recipient|or_me:user}}</span>
                         <span class="msg-subject"><a
-                            href="{% if bb_item.thread_id %}{% url 'postman_view_conversation' bb_item.thread_id %}{% else %}{{request.get_full_path}}{% endif %}?next={{ request.get_full_path|urlencode }}">{{bb_item.subject}}</a>
+                            href="{% if bb_item.thread_id %}{% url 'postman_view_conversation' bb_item.thread_id %}{% else %}{{bb_item.get_absolute_url}}{% endif %}?next={{ request.get_full_path|urlencode }}">{{bb_item.subject}}</a>
                         </span>
                         <span class="msg-id">{{bb_item.id}}</span>
                         <span class="msg-category">{{bb_item.category}}</span>
